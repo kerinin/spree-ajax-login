@@ -1,0 +1,24 @@
+body.ajax-login div#ajax-login {
+  width: 600px;
+  height: 400px;
+  position: absolute;
+  top: 50px;
+  left: 50%;
+  margin-left: -300px;
+  
+  background: white;
+  padding: 1em;
+  z-index: 1000;
+}
+
+body.ajax-login div#ajax-login-background {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  
+  background: black;
+  opacity: .5;
+  z-index: 999;
+}

@@ -18,5 +18,32 @@ class AjaxLoginExtension < Spree::Extension
     # Spree::BaseController.class_eval do
     #   helper YourHelper
     # end
+    UserSessionsController.class_eval do
+      private
+      
+      def create_user(data)
+        @user = User.new(data)
+
+        @user.save do |result|
+          if result
+            respond_to do |format|
+              format.html {
+                flash[:notice] = t(:user_created_successfully) unless session[:return_to]
+                redirect_back_or_default products_url
+              }
+              format.js { create_user_session( @user ) }
+            end
+          else
+            respond_to do |format|
+              format.html {
+                flash[:notice] = t(:missing_required_information)
+                redirect_to :controller => :users, :action => :new, :user => {:openid_identifier => @user.openid_identifier}
+              }
+              format.js { render :action => :create_user_fails, :locals => {:openid_identifier => @user.openid_identifier} }
+            end
+          end
+        end
+      end
+    end
   end
 end

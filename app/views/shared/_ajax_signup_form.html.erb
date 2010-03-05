@@ -1,0 +1,48 @@
+<%= error_messages_for :user %>
+<h2><%= t("new_customer") %></h2>
+
+<% remote_form_for( User.new() ) do |f| %>
+
+  <% hook :signup_inside_form do %>
+    <p>
+      <%= f.label :email, t("email") %><br />
+      <%= f.text_field :email, :class => 'title'  %>
+    </p>
+    <div id="password-credentials">
+      <p>
+        <%= f.label :password, t("password") %><br />
+        <%= f.password_field :password, :class => 'title'  %>
+      </p>
+
+      <p>
+        <%= f.label :password_confirmation, t("password_confirmation", :default => t(:confirm)) %><br />
+        <%= f.password_field :password_confirmation, :class => 'title' %>
+      </p>
+    </div>
+
+    <%= hook :signup_below_password_fields %>
+
+    <% if Spree::Config[:allow_openid] %>
+      <div id="openid-credentials">
+        <p>
+          <%= f.label :openid_identifier, t('OpenID', :default => 'OpenID') %><br />
+          <%= f.text_field :openid_identifier, :class => 'openid_url' %>
+        </p>
+      </div>
+    <% end %>
+
+    <% if Spree::Config[:allow_openid] %>
+      <p id='enable_login_via_openid' ><a href='#'><%= t :enable_login_via_openid %></a></p>
+      <p id='enable_login_via_login_password' ><a href='#'><%= t :enable_login_via_login_password %></a></p>
+      <%= javascript_include_tag 'open_id' %>
+    <% end %>
+
+    <p><%= submit_tag t("create"), :class => 'button primary' %></p>
+  <% end %>
+
+<% end %>
+
+<%= t("or") %> 
+<%= link_to_function t("login"), '$login.login();' %> | 
+<%= link_to_function t("forgot_password"), '$login.forgot();' %> |
+<%= link_to_function t("cancel"), '$login.cancel();' %>

@@ -1,0 +1,17 @@
+<%= stylesheet_link_tag "ajax_login.css" %>
+<div id='ajax-login-background'></div>
+<div id='ajax-login' style='display:none;'>
+  <% hook :ajax_login do %>
+    <%=javascript_include_tag "ajax_login.js" %>
+    
+    <div id='ajax-login-form' style='display:none;'>
+      <%= render :partial => 'shared/ajax_login_form' %>
+    </div>
+    <div id='ajax-forgot-form' style='display:none;'>
+      <%= render :partial => 'shared/ajax_forgot_form' %>
+    </div>
+    <div id='ajax-signup-form' style='display:none;'>
+      <%= render :partial => 'shared/ajax_signup_form' %>
+    </div>
+  <% end %>
+</div>
