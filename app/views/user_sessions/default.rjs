@@ -1,0 +1,1 @@
+page << '$user_session.session = true; $user_session.teardown();'

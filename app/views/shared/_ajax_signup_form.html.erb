@@ -1,8 +1,10 @@
-<%= error_messages_for :user %>
 <h2><%= t("new_customer") %></h2>
 
-<% remote_form_for( User.new() ) do |f| %>
+<%= error_messages_for :user %>
 
+<% remote_form_for( User.new() ) do |f| %>
+  <%= yield(:ajax_login_update_remote) or yield(:ajax_login_update_remote_default) %>
+  
   <% hook :signup_inside_form do %>
     <p>
       <%= f.label :email, t("email") %><br />
@@ -43,6 +45,6 @@
 <% end %>
 
 <%= t("or") %> 
-<%= link_to_function t("login"), '$login.login();' %> | 
-<%= link_to_function t("forgot_password"), '$login.forgot();' %> |
-<%= link_to_function t("cancel"), '$login.cancel();' %>
+<%= link_to_function t("login"), '$user_session.login_form();' %> | 
+<%= link_to_function t("forgot_password"), '$user_session.forgot_form();' %> |
+<%= link_to_function t("cancel"), '$user_session.cancel();' %>

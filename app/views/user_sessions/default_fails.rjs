@@ -1,0 +1,2 @@
+page.replace 'ajax-login', :partial => 'shared/ajax_login'
+page << '$user_session.login();'

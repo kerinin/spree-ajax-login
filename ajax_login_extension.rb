@@ -13,12 +13,13 @@ class AjaxLoginExtension < Spree::Extension
   # end
   
   def activate
-
+    ActiveRecord::Base.logger.warn "activating"
     # make your helper avaliable in all views
     # Spree::BaseController.class_eval do
     #   helper YourHelper
     # end
-    UserSessionsController.class_eval do
+
+=begin
       private
       
       def create_user(data)
@@ -44,6 +45,8 @@ class AjaxLoginExtension < Spree::Extension
           end
         end
       end
+
     end
+=end
   end
 end

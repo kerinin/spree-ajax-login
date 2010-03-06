@@ -1,6 +1,9 @@
 <%= stylesheet_link_tag "open_id.css" %>
 <h2><%= t("login_as_existing") %></h2>
-<% form_tag user_session_path do  %>
+
+<% form_remote_tag :url => user_session_path do  %>
+  <%= yield(:ajax_login_update_remote) or yield(:ajax_login_update_remote_default) %>
+  
   <div id='password-credentials'>
     <p>
       <%= label :user_session, :login, t("email") %><br />
@@ -38,6 +41,6 @@
 <% end %>
 
 <%= t("or") %> 
-<%= link_to_function t("create_a_new_account"), '$login.signup();' %> | 
-<%= link_to_function t("forgot_password"), '$login.forgot();' %> |
-<%= link_to_function t("cancel"), '$login.cancel();' %>
+<%= link_to_function t("create_a_new_account"), '$user_session.signup_form();' %> | 
+<%= link_to_function t("forgot_password"), '$user_session.forgot_form();' %> |
+<%= link_to_function t("cancel"), '$user_session.cancel();' %>

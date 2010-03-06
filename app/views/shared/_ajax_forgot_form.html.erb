@@ -1,5 +1,5 @@
 <%= t("or") %> 
 
-<%= link_to_function t("login"), '$login.login();' %> |
-<%= link_to_function t("create_a_new_account"), '$login.signup();' %> | 
-<%= link_to_function t("cancel"), '$login.cancel();' %>
+<%= link_to_function t("login"), '$user_session.login_form();' %> |
+<%= link_to_function t("create_a_new_account"), '$user_session.signup_form();' %> | 
+<%= link_to_function t("cancel"), '$user_session.cancel();' %>

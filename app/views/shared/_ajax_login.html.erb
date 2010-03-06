@@ -1,9 +1,20 @@
+<% content_for :ajax_login_update_remote_default do %>
+  <%= hidden_field_tag :update_remote, 'default' %>
+<% end %>
+  
 <%= stylesheet_link_tag "ajax_login.css" %>
 <div id='ajax-login-background'></div>
 <div id='ajax-login' style='display:none;'>
   <% hook :ajax_login do %>
     <%=javascript_include_tag "ajax_login.js" %>
     
+    <% if flash[:notice] %>
+    <div class="flash notice"><%= flash[:notice] %></div>
+    <% end %>
+    <% if flash[:error] %>
+    <div class="flash errors"><%= flash[:error] %></div>
+    <% end %>
+      
     <div id='ajax-login-form' style='display:none;'>
       <%= render :partial => 'shared/ajax_login_form' %>
     </div>
