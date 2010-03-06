@@ -12,7 +12,6 @@ function ajax_login_init() {
   };
   
   $user_session.teardown = function() {
-    this.callbacks({});
     this.setup()
     jQuery('#ajax-login').hide();
     $('body').removeClass('ajax-login');
