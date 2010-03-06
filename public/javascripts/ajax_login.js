@@ -30,7 +30,7 @@ function ajax_login_init() {
         'loading'       : function(){},
         'loaded'        : function(){},
         'interactive'   : function(){},
-        'success'       : function(){ this.session = true; this.teardown(); },
+        'success'       : function(){},
         'failure'       : function(){},
         'complete'      : function(){},
         'confirm'       : function(){},
