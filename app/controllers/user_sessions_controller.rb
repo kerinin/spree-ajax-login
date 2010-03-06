@@ -54,6 +54,7 @@ class UserSessionsController < Spree::BaseController
           format.js {
             user = @user_session.record
             if update_remote
+              @current_user_session = @user_session
               render update_remote
             else
               render :json => {:ship_address => user.ship_address, :bill_address => user.bill_address}.to_json
