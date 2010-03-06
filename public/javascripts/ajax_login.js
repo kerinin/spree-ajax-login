@@ -49,18 +49,18 @@ function ajax_login_init() {
   // set default callbacks
   $user_session.callbacks({});
 
-  $user_session.exists = function() {
+  $user_session.exists = function( opts ) {
     if(this.session == true) return true;
     else {
-     this.login();
+     this.login_form( opts );
      return false;
     }
   };
   
   // state changes and callback initialization
-  $user_session.login = function( opts ) { this.callbacks(opts).setup(); jQuery('#ajax-login-form').show(); };
-  $user_session.signup = function( opts ) { this.callbacks(opts).setup(); jQuery('#ajax-signup-form').show(); };
-  $user_session.forgot = function( opts ) { this.callbacks(opts).setup(); jQuery('#ajax-forgot-form').show(); };
+  $user_session.login_form = function( opts ) { this.callbacks(opts).setup(); jQuery('#ajax-login-form').show(); };
+  $user_session.signup_form = function( opts ) { this.callbacks(opts).setup(); jQuery('#ajax-signup-form').show(); };
+  $user_session.forgot_form = function( opts ) { this.callbacks(opts).setup(); jQuery('#ajax-forgot-form').show(); };
 }
 
 jQuery(document).ready( ajax_login_init ); 
