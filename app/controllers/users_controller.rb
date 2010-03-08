@@ -19,9 +19,8 @@ class UsersController < Spree::BaseController
 	      respond_to do |format|
 	        format.html { redirect_back_or_default products_url }
 	        format.js { 
-	          if params[:update_remote]
-	            @current_user = @user
-	            render params[:update_remote]
+	          if params[:return_to]
+	            redirect_to return_to
 	          else
 	            render :js => true.to_json 
 	          end
@@ -31,9 +30,9 @@ class UsersController < Spree::BaseController
 	      respond_to do |format|
 	        format.html { render :action => :new }
 	        format.js { 
-	          if params[:update_remote]
+	          if params[:return_to]
 	            flash.now[:error] = t("login_failed")
-              render "#{update_remote}_fails"
+              redirect_to return_to
             else
 	            render :js => @user.errors.to_json
 	          end

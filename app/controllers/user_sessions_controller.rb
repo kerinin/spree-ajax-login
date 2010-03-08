@@ -15,9 +15,9 @@ class UserSessionsController < Spree::BaseController
         user_with_openid_exists?(params[:user_session]) 
 
     if not_need_user_auto_creation
-      create_user_session(params[:user_session], params[:update_remote])   
+      create_user_session(params[:user_session], params[:return_to])   
     else
-      create_user(params[:user_session])
+      create_user(params[:user_session], params[:return_to])
     end
   end
 
@@ -42,7 +42,7 @@ class UserSessionsController < Spree::BaseController
     data && data[:openid_identifier].blank?
   end
   
-  def create_user_session(data, update_remote)
+  def create_user_session(data, return_to)
     @user_session = UserSession.new(data)
     @user_session.save do |result|
       if result
@@ -53,9 +53,8 @@ class UserSessionsController < Spree::BaseController
           }
           format.js {
             user = @user_session.record
-            if update_remote
-              @current_user_session = @user_session
-              render update_remote
+            if return_to
+              redirect_to return_to
             else
               render :json => {:ship_address => user.ship_address, :bill_address => user.bill_address}.to_json
             end
@@ -68,9 +67,9 @@ class UserSessionsController < Spree::BaseController
             render :action => :new
           }
           format.js { 
-            if update_remote
+            if return_to
               flash.now[:error] = t("login_failed")
-              render "#{update_remote}_fails"
+              redirect_to return_to
             else
               render :json => false 
             end
@@ -81,7 +80,7 @@ class UserSessionsController < Spree::BaseController
     redirect_back_or_default(products_path) unless performed?
   end
   
-  def create_user(data, update_remote)
+  def create_user(data, return_to)
     @user = User.new(data)
 
     @user.save do |result|
@@ -91,15 +90,13 @@ class UserSessionsController < Spree::BaseController
             flash[:notice] = t(:user_created_successfully) unless session[:return_to]
             redirect_back_or_default products_url
           }
-          format.js { render update_remote }
+          format.js { redirect_to return_to }
         end
       else
+        flash[:notice] = t(:missing_required_information)
         respond_to do |format|
-          format.html {
-            flash[:notice] = t(:missing_required_information)
-            redirect_to :controller => :users, :action => :new, :user => {:openid_identifier => @user.openid_identifier}
-          }
-          format.js { render "#{update_remote}_fails"}
+          format.html { redirect_to :controller => :users, :action => :new, :user => {:openid_identifier => @user.openid_identifier} }
+          format.js { redirect_to return_to}
         end
       end
     end

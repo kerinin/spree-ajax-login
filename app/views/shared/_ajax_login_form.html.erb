@@ -2,7 +2,7 @@
 <h2><%= t("login_as_existing") %></h2>
 
 <% form_remote_tag :url => user_session_path, :loading => '$user_session.loading();', :loaded => '$user_session.loaded();', :interactive => '$user_session.interactive();', :success => '$user_session.success();', :failure => '$user_session.failure();', :complete => '$user_session.complete();' do  %>
-  <%= yield(:ajax_login_update_remote) or yield(:ajax_login_update_remote_default) %>
+  <%= yield :ajax_login_return_to %>
   
   <div id='password-credentials'>
     <p>

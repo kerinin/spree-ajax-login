@@ -2,7 +2,7 @@
 
 <%= error_messages_for :user %>
 <% remote_form_for User.new(), :loading => '$user_session.loading();', :loaded => '$user_session.loaded();', :interactive => '$user_session.interactive();', :success => '$user_session.success();', :failure => '$user_session.failure();', :complete => '$user_session.complete();' do |f| %>
-  <%= yield(:ajax_login_update_remote) or yield(:ajax_login_update_remote_default) %>
+  <%= yield :ajax_login_return_to %>
   
   <% hook :signup_inside_form do %>
     <p>

@@ -16,28 +16,18 @@ class UserSessionsControllerTest < ActionController::IntegrationTest
 
     context "on successful ajax POST to :create" do
       setup do
-        xhr :post, '/user_session', {:update_remote => 'default', :user_session => { :login => @user.email, :password => @user.password }}
-        puts @response.body
-        puts flash
-        
+        xhr :post, '/user_session', {:return_to => '/', :user_session => { :login => @user.email, :password => @user.password }}
       end
-      should_assign_to :user_session
-      should_respond_with :success
-      should_respond_with_content_type 'text/javascript'
-      should_render_template 'default'
+      should_respond_with :redirect
+      should_redirect_to(':return_to') {'/'}
     end
     
     context "on failed ajax POST to :create" do
       setup do
-        xhr :post, '/user_session', {:update_remote => 'default', :user_session => { :login => @user.email, :password => 'wrong password' }}
-        puts @response.body
-        puts flash
-        
+        xhr :post, '/user_session', {:return_to => '/', :user_session => { :login => @user.email, :password => 'wrong password' }}
       end
-      should_assign_to :user_session
-      should_respond_with :success
-      should_respond_with_content_type 'text/javascript'
-      should_render_template 'default_fails'
+      should_respond_with :redirect
+      should_redirect_to(':return_to') {'/'}
     end
   end
 end
