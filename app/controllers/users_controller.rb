@@ -57,9 +57,9 @@ class UsersController < Spree::BaseController
 
   private
 
-    def object
-      @object ||= current_user
-    end
+    #def object
+    #  @object ||= current_user
+    #end
     
     def show_before
       @orders = @user.orders.checkout_complete 
